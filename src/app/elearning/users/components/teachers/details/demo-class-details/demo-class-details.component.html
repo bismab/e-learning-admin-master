@@ -1,0 +1,79 @@
+<div class="card card-plain" style="font-size: 17px; padding: 15px;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="row text-center">
+                    <div *ngIf="teacherDemoClassDetails?.status != 'approved'" class="col-md-6 mx-auto">
+                        <div class="form-group">
+                            <label for="">Select To Assign Contract</label>
+                            <select [(ngModel)]="selectedContract" name="" class="form-control" id="">
+                                <option *ngFor="let c of contracts" [value]="c._id">{{c?.title || 'Un-Named'}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="teacherDemoClassDetails?.status != 'approved'" class="col-md-2 mx-auto">
+                        <label for="">&nbsp;</label>
+                        <button (click)="assignContractAndApproveProfile()"
+                            class="btn btn-block btn-success">Approve</button>
+                    </div>
+                    <div *ngIf="teacherDemoClassDetails?.status != 'declined'" class="col-md-2 mx-auto">
+                        <label for="">&nbsp;</label>
+                        <button (click)="decline()" class="btn btn-block btn-danger">Decline</button>
+                    </div>
+                    <div *ngIf="teacherDemoClassDetails?.status != 'conditional'" class="col-md-2 mx-auto">
+                        <label for="">&nbsp;</label>
+                        <button (click)="conditionalizeDemoClass()"
+                            class="btn btn-block btn-warning">Conditional</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+
+        </div>
+        <div *ngIf="teacherDemoClassDetails?.status == 'declined'" class="row">
+            <div class="col-12">
+                <div class="alert alert-danger text-center">
+                    <b>Declined.</b>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="teacherDemoClassDetails?.status == 'conditional'" class="row">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <b>Conditionalized.</b>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="teacherDemoClassDetails?.status == 'approved'" class="row">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <b>Approved.</b>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a [href]="staticUrl + teacherDemoClassDetails?.demoClass?.file"><strong>Downloadable Class
+                        Data</strong></a>
+                <p>
+                    {{teacherDemoClassDetails?.demoClass?.description}}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h4 class="text-center">Attempted {{teacherDemoClassDetails?.attempts}} of
+                    {{teacherDemoClassDetails?.demoClass?.maxAttempts}} demo class recording attempts.</h4>
+
+                <video controls id="recording" class="mt-3" src="{{staticUrl}}{{teacherDemoClassDetails?.videoFile}}"
+                    style="width: 100%;"></video>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>

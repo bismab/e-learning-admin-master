@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col-10 mx-auto">
+                <h3 class="font-weight-bold">Contract</h3>
+                <div class="row">
+                    <div class="col-md-12 mx-auto">
+                        <form #frm="ngForm" class="mt-3">
+                            <div class="form-group  border-left-success">
+                                <label for="name" class="ml-2 font-weight-bold">Title</label>
+                                <input type="text"
+                                    class="form-control ml-2 border-bottom border-top-0 border-right-0 border-left-0 rounded-0"
+                                    id="name" name="name" [(ngModel)]="contract.title"
+                                    placeholder="Title of Contract Here" />
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label for="name" class="ml-2 font-weight-bold">Description</label>
+                                <div [froalaEditor]="options" name="description" id="description"
+                                    [(froalaModel)]="contract.description"></div>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="name" class="ml-2 font-weight-bold">Template</label>
+                                <select name="template" class="form-control" [(ngModel)]="contract.template" id="">
+                                    <option *ngFor="let t of templates" [value]="t?._id">{{t?.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="ml-2 font-weight-bold">Instructions (optional)</label>
+                                <textarea class="form-control" id="guideLines" #guideLines
+                                    [(ngModel)]="contract.guideLines" name="guideLines" rows="4"></textarea>
+                                <!-- <ngx-editor [spellcheck]="true" id="description" #description name="description"
+                                    (keyup)="showCaretPos()" (click)="showCaretPos()" [(ngModel)]="contract.description">
+                                </ngx-editor> -->
+                            </div>
+                            <button (click)="saveContract()" type="button" class="btn btn-success">
+                                SAVE Contract
+                            </button>
+                        </form>
+                    </div>
+                    <!-- <div class="col-md-3 mt-3">
+                        <button type="button" (click)="
+                          addValues('TEACHER_NAME')
+                        " class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i>Teacher Name
+                        </button>
+                        <button type="button" (click)="addValues('TEACHER_EXPERIENCE')"
+                            class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i>Teacher Experience
+                        </button>
+                        <button type="button" (click)="
+                          addValues('TEACHER_EDUCATION')
+                        " class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i> Teacher Education
+                        </button>
+                        <button type="button" (click)="addValues('TEACHER_EXPERIENCE_LEVEL')"
+                            class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i> Teacher Experience Level
+                        </button>
+                        <button type="button" (click)="
+                          addValues('CONTRACT_DATE')
+                        " class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i> Contract Date
+                        </button>
+                        <button type="button" (click)="
+                          addValues('TEACHER_EMAIL')
+                        " class="btn btn-success btn-block">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i> Teacher Email
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

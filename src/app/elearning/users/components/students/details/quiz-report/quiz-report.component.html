@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-12 mx-auto text-center">
+        <p class="text-center font-weight-bold" *ngIf="message">{{message}}</p>
+        <fieldset *ngIf="studentQuizDetails">
+            <p><b>Completed:</b>&nbsp;{{(studentQuizDetails?.isCompleted) ? 'Yes' : 'No'}},&nbsp;&nbsp;<b>Total
+                    Questions:</b>&nbsp;{{studentQuizDetails?.totalQuestions || 'NA'}},&nbsp;&nbsp;
+                    <b>Answered:</b>&nbsp;{{studentQuizDetails?.answeredQuestions || 'NA'}},&nbsp;&nbsp;<b>Time For
+                    Quiz:</b>&nbsp;{{studentQuizDetails?.timeInMins || 'NA'}}m,&nbsp;&nbsp;<b>Started
+                    At:</b>&nbsp;{{studentQuizDetails?.startedAt | date :'short' || 'NA'}},&nbsp;&nbsp;<b>Stopped
+                    At:</b>&nbsp;{{studentQuizDetails?.stoppedAt | date :'short' || 'NA'}}</p>
+            <hr>
+            <div *ngFor="let q of studentQuizDetails.questions">
+                <h4 class="font-weight-bold mb-3">{{q?.question}}</h4>
+                <div *ngIf="q.type != 'audio-record'" class="btn-group btn-group-toggle">
+                    <span *ngFor="let op of q.answerOptions" [ngClass]="(op.isCorrect) ? 'btn-success' : 'btn-light'"
+                        class="btn cursor-default btn-sm m-2">
+                        {{op?.op}}<i *ngIf="op.isSelect" class="fa fa-circle" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <!-- <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model"> -->
+                <!-- <div *ngIf="selectedQuizQuestion.detail.q.type == 'single-select'"
+                    class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="selectedQuizQuestion.a"
+                    name="radioBasic">
+                    <label *ngFor="let ansOp of selectedQuizQuestion.detail.q.answerOptions" ngbButtonLabel
+                        class="btn btn-sm btn-outline-primary m-2">
+                        <input ngbButton type="radio" [value]="ansOp._id">{{ansOp?.op}}
+                    </label>
+                </div> -->
+                <div class="mt-3" *ngIf="q.type == 'audio-record'">
+                    <audio style="width: 100%;" class="m-2" controls src="{{staticFileUrl}}{{q.file}}"></audio>
+                </div>
+                <hr>
+            </div>
+        </fieldset>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="card card-plain" style="font-size: 17px; padding: 15px;">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="row">
+                <div *ngIf="teacherProfileDetails?.teacherAcademicInfo?.status != 'approved'" class="col-md-6 mx-auto">
+                    <div class="form-group">
+                        <label for="">Select To Assign Demo Class</label>
+                        <select [(ngModel)]="selectedDemoClass" name="" class="form-control" id="">
+                            <option *ngFor="let c of demoClasses" [value]="c._id">{{c?.name || 'Un-Named'}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf="teacherProfileDetails?.teacherAcademicInfo?.status != 'approved'" class="col-md-2 mx-auto">
+                    <label for="">&nbsp;</label>
+                    <button (click)="assignDemoClassAndApproveProfile()"
+                        class="btn btn-block btn-success">Approve</button>
+                </div>
+
+                <div *ngIf="teacherProfileDetails?.teacherAcademicInfo?.status != 'declined'" class="col-md-2 mx-auto">
+                    <label for="">&nbsp;</label>
+                    <button (click)="declineProfile()" class="btn btn-block btn-danger">Decline</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div *ngIf="teacherProfileDetails?.teacherAcademicInfo?.status == 'approved'" class="row">
+        <div class="col-12">
+            <div class="alert alert-success text-center">
+                <b>Approved.</b>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="teacherProfileDetails?.teacherAcademicInfo?.status == 'declined'" class="row">
+        <div class="col-12">
+            <div class="alert alert-danger text-center">
+                <b>Declined.</b>
+            </div>
+        </div>
+    </div>
+    <div class="col col-md-12">
+        <div class="mb-3 text-left">
+            <h3><b>Personal Information</b></h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 text-left">
+                <b>Email</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.email || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 text-left">
+                <b>Age</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.age || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Gender</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.gender || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Bio</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.bio || 'NA'}}
+            </div>
+        </div>
+    </div>
+    <div *ngIf="teacherProfileDetails?.govtId" class="col text-left col-md-12">
+        <div class="mb-3 text-left">
+            <h3><b>Government Identity</b></h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-8">
+                <a href="{{staticUrl}}{{teacherProfileDetails?.govtId}}" target="_blank">
+                    <img style="width: 50%;" src="{{staticUrl}}{{teacherProfileDetails?.govtId}}" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col col-md-12">
+        <div class="mb-3 text-left">
+            <h3><b>Academic Information</b></h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-3  text-left">
+                <b>Max Education</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.teacherAcademicInfo?.maxEducation || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-3  text-left">
+                <b>Max Teaching Experience</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.teacherAcademicInfo?.maxExperience || 'NA'}}
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-3  text-left">
+                <b>Experience Level</b>
+            </div>
+            <div class="col-6 text-left">
+                {{teacherProfileDetails?.teacherAcademicInfo?.experienceLevel || 'NA'}}
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

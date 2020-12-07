@@ -1,0 +1,269 @@
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col-12 mx-auto">
+                <h3 class="font-weight-bold">Session Assignment</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card-plain shadow-sm">
+                            <div class="card-body">
+                                <form #teacherfrm="ngForm">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button [disabled]="sessionEnrollment.teacher"
+                                                (click)="openTeachersListingPopup(teachersPopup)"
+                                                class="btn btn-block btn-primary">Add Teacher +</button>
+
+                                            <!-- <div class="form-group  border-left-success">
+                                                <label for="name" class="ml-2 font-weight-bold">Select Teacher</label>
+                                                <select name="ct" (change)="selectTeacher($event)" class="form-control"
+                                                    id="ct">
+                                                    <option disabled selected value=""></option>
+                                                    <option *ngFor="let t of teachers" [value]="t._id">{{t?.name}}
+                                                        {{t?.age}}
+                                                        years of old. ({{t?.gender}})
+                                                    </option>
+                                                </select>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-12">
+                                            <table class="table table-responsive-md table-hover">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th scope="col">Teacher Name</th>
+                                                        <th scope="col">Age</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngIf="sessionEnrollment?.teacher" class="text-center">
+                                                        <td>{{ sessionEnrollment?.teacher?.name || 'None'}} <br>
+                                                        </td>
+                                                        <td>{{ sessionEnrollment?.teacher?.age || 'None'}}
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="label label-primary">{{ sessionEnrollment?.teacher?.gender || 'None'}}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <button (click)="removeTeacher(sessionEnrollment._id)"
+                                                                class="btn btn-sm btn-danger btn-circle" type="button">
+                                                                X
+                                                            </button>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-plain shadow-sm">
+                            <div class="card-body">
+                                <form #frm="ngForm">
+                                    <div class="row">
+
+                                        <div class="col-12">
+                                            <button (click)="openStudentEnrollmentListingPopup(students)"
+                                                class="btn btn-block btn-primary">Add Students + (Max
+                                                {{sessionEnrollment?.session?.maxStudents || 'NA'}})</button>
+                                            <!-- <div class="form-group  border-left-success">
+                                                <label for="sn" class="ml-2 font-weight-bold">Select Max
+                                                    ({{sessionEnrollment?.session?.maxStudents}}) Students</label>
+                                                <select name="sn" (change)="selectStudent($event)" class="form-control" id="sn">
+                                                    <option disabled selected value=""></option>
+                                                    <option *ngFor="let sn of studentEnrollmentRequests" [value]="sn._id">
+                                                        {{sn?.student?.name}} {{sn?.student?.age}} years of old.
+                                                        ({{sn?.student?.gender}}). Preference
+                                                        {{sn?.startTime | date :'hh:mm a'}} to {{sn?.endTime | date :'hh:mm a'}}
+                                                    </option>
+                                                </select>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-12">
+                                            <table class="table table-responsive-md table-hover">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th scope="col">Student Name</th>
+                                                        <th scope="col">Age</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Preference</th>
+                                                        <th scope="col">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-center"
+                                                        *ngFor="let sn of sessionEnrollment.students; let i=index">
+                                                        <td>{{ sn?.student?.name || 'None'}} <br>
+                                                        </td>
+                                                        <!-- <td>{{s?.startDate | date :'shortDate':'z'}} to
+                                                            {{s?.endDate | date :'shortDate':'z'}} <br>
+                                                        </td> -->
+                                                        <td>{{ sn?.student?.age || 'None'}}</td>
+                                                        <td>
+                                                            <span
+                                                                class="label label-primary">{{ sn?.student?.gender || 'None'}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-success">
+                                                                {{sn?.enrollment?.startTime | date :'hh:mm a'}} to
+                                                                {{sn?.enrollment?.endTime | date :'hh:mm a'}}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                (click)="removeStudent(sessionEnrollment._id, sn.enrollment._id , i)"
+                                                                class="btn btn-sm btn-danger btn-circle" type="button">
+                                                                X
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<ng-template #students let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Students</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <form>
+                    <div class="form-group">
+                        <table class="table table-responsive-md table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Preference</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let sn of studentEnrollmentRequests; let i=index" class="text-center">
+                                    <td>{{ sn?.student?.name || 'None'}} <br>
+                                    </td>
+                                    <!-- <td>{{s?.startDate | date :'shortDate':'z'}} to
+                                        {{s?.endDate | date :'shortDate':'z'}} <br>
+                                    </td> -->
+                                    <td>{{ sn?.student?.age || 'None'}}</td>
+                                    <td>
+                                        <span class="label label-primary">{{ sn?.student?.gender || 'None'}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="label label-success">
+                                            {{sn?.startTime | date :'hh:mm a'}} to
+                                            {{sn?.endTime | date :'hh:mm a'}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button *ngIf="!sn.selected" (click)="selectStudent(sn._id,i)"
+                                            class="btn btn-sm btn-info btn-circle" type="button">
+                                            +
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+</ng-template>
+
+
+
+<ng-template #teachersPopup let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Teachers</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <form>
+                    <div class="form-group">
+                        <table class="table table-responsive-md table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">Teacher Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Class Type</th>
+                                    <th scope="col">Level</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let t of teachers; let i=index" class="text-center">
+                                    <td>{{ t?.name || 'None'}} <br>
+                                    </td>
+                                    <td>{{ t?.age || 'None'}}
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">{{ t?.gender || 'None'}}</span>
+
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="label label-success">{{ (t?.classType?.title || 'NA') | uppercase}}</span>
+
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="label label-warning">{{ (t?.level?.title || 'NA') | uppercase}}</span>
+
+                                    </td>
+                                    <td>
+                                        <button *ngIf="!t.selected" (click)="selectTeacher(t._id,i)"
+                                            class="btn btn-sm btn-info btn-circle" type="button">
+                                            +
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+</ng-template>

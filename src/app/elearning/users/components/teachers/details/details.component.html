@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col">
+        <div class="card card-plain m-3">
+            <div class="card-body">
+                <h3 class="font-weight-normal"> {{teacherProfileDetails?.name || 'Teacher Details'}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <div class="card-plain">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <ul ngbNav #nav="ngbNav" (activeIdChange)="changeState($event)" [(activeId)]="active"
+                                class="nav-pills" orientation="vertical">
+                                <li ngbNavItem="tpd">
+                                    <a style="width: 200px;" ngbNavLink>Profile</a>
+                                    <ng-template ngbNavContent>
+                                        <app-teacher-profile-view [teacherProfileInfo]="teacherProfileDetails"
+                                            (teacherProfileInfo)="profileInit($event)" [teacherId]="teacherId">
+                                        </app-teacher-profile-view>
+                                    </ng-template>
+                                </li>
+                                <li ngbNavItem="tdcd">
+                                    <a ngbNavLink>Demo Class</a>
+                                    <ng-template ngbNavContent>
+                                        <app-demo-class-details
+                                            [approvalInfo]="teacherProfileDetails?.teacherApprovalInfoLevel"
+                                            [teacherDemoClassInfo]="teacherDemoClassDetails"
+                                            (approvalLevelInfo)="approvalLevelInit($event)"
+                                            (teacherDemoClassInfo)="demoClassInit($event)" [teacherId]="teacherId">
+                                        </app-demo-class-details>
+                                    </ng-template>
+                                </li>
+
+                                <li ngbNavItem="tcd">
+                                    <a ngbNavLink>Contract</a>
+                                    <ng-template ngbNavContent>
+                                        <app-contract-details
+                                            [approvalInfo]="teacherProfileDetails?.teacherApprovalInfoLevel"
+                                            [teacherContractInfo]="teacherContractDetails"
+                                            [teacherProfileInfo]="teacherProfileDetails"
+                                            (teacherProfileInfo)="profileInit($event)"
+                                            (teacherContractInfo)="contractInit($event)" [teacherId]="teacherId">
+                                        </app-contract-details>
+                                    </ng-template>
+                                </li>
+
+                            </ul>
+
+                            <div [ngbNavOutlet]="nav" class="ml-4" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

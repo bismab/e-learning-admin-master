@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold">Demo Classes</h3>
+        <div class="card-plain">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <Button (click)="openClassForm(class)" class="btn btn-success">Create</Button>
+                        <hr>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <input [(ngModel)]="search.name" name="name" class="form-control form-control-sm"
+                                placeholder="Name..." type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button (click)="loadDemoClasses()" class="btn btn-block btn-info">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive-md table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Name</th>
+                        <th scope="col">Max Attempts</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center" *ngFor="let c of demoClasses; let i=index">
+                        <td>{{ c?.name || 'None'}} <br>
+                            <a href="{{staticUrl}}{{c?.file}}" class="font-weight-bold" target="_blank">Attachment</a>
+                        </td>
+
+                        <td>{{ c?.maxAttempts }}</td>
+
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <div *ngIf="c.isActive" class="custom-control custom-checkbox">
+                                    <input (click)="activationClass(c._id, c.isActive,i)" checked onclick="return false"
+                                        name="block" class="custom-control-input" id="'b-'{{c._id}}"
+                                        type="checkbox" /><label class="custom-control-label"
+                                        for="'b-'{{c._id}}"></label>
+                                </div>
+                                <div *ngIf="!c.isActive" class="custom-control custom-checkbox">
+                                    <input (click)="activationClass(c._id, c.isActive,i)" onclick="return false"
+                                        name="block" class="custom-control-input" id="'b-'{{c._id}}"
+                                        type="checkbox" /><label class="custom-control-label"
+                                        for="'b-'{{c._id}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button (click)="deleteClass(c._id,i)" class="btn btn-sm btn-danger btn-circle"
+                                type="button">
+                                X
+                            </button>
+                            <button (click)="openClassForm(class,c._id,i)" class="btn btn-sm btn-info btn-circle"
+                                type="button">
+                                E
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ngb-pagination class="d-flex justify-content-end" (pageChange)="pagination($event)" [pageSize]="numOfItems"
+            [collectionSize]="collSize" [(page)]="currPage" [maxSize]="6" [boundaryLinks]="true" size="sm">
+        </ngb-pagination>
+    </div>
+</div>
+
+
+
+<ng-template #class let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Class</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="saveClass(f.value)" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input [(ngModel)]="selectedClass.name" name="name" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        <textarea [(ngModel)]="selectedClass.description" name="description" class="form-control" id="description" cols="30"
+                            rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Max Attempts</label>
+                        <input [(ngModel)]="selectedClass.maxAttempts" name="maxAttempts" class="form-control" type="number">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div *ngIf="selectedClass.file" class="form-group">
+                        <a href="{{staticUrl}}{{selectedClass.file}}" class="font-weight-bold" target="_blank" >Attached File</a>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Attachment</label>
+                        <input name="contract" type="file" class="form-control" id="classGuide"
+                            (change)="selectFile($event)">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-inverse" (click)="modal.dismiss('Cross click')">
+            Close
+        </button>
+    </div> -->
+</ng-template>

@@ -1,0 +1,335 @@
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold">Training</h3>
+        <div class="card-plain">
+            <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul ngbNav #nav="ngbNav" (activeIdChange)="tabChange($event)" [(activeId)]="active"
+                            [destroyOnHide]="true" class="nav-tabs">
+                            <li [ngbNavItem]="1">
+                                <a ngbNavLink>Basic Info</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-8 mt-3 mx-auto">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="">Name</label>
+                                                        <input [(ngModel)]="trainingInfo.name" class="form-control"
+                                                            type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="">Training Time
+                                                            (mins)</label>
+                                                        <input [(ngModel)]="trainingInfo.timeInMins"
+                                                            class="form-control" type="number">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="">Description</label>
+                                                        <textarea [(ngModel)]="trainingInfo.description"
+                                                            name="description" class="form-control" id="description"
+                                                            cols="30" rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div *ngIf="trainingInfo.attachment" class="form-group">
+                                                        <a href="{{staticUrl}}{{trainingInfo.attachment}}"
+                                                            class="font-weight-bold" target="_blank">Attached File</a>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="">Select Attachment</label>
+                                                        <input name="attachment" type="file" class="form-control"
+                                                            id="attachment" (change)="selectFile($event)">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <button (click)="saveTraining()"
+                                                        class="btn btn-success btn-block">Save</button>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <!-- <li [ngbNavItem]="2">
+                                <a ngbNavLink>Address/Location</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        
+                                    </div>
+                                </ng-template>
+                            </li> -->
+
+
+                            <li [ngbNavItem]="2">
+                                <a ngbNavLink>Questions</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <button (click)="openQuestionForm(question)"
+                                            class="btn ml-3 btn-light mb-3 btn-circle">Add Question</button>
+                                        <div class="col-md-12">
+                                            <p-accordion>
+                                                <p-accordionTab *ngFor="let q of questions; let i=index"
+                                                    header="{{q?.question}}" [selected]="(i==0)? true : false">
+
+                                                    <table class="table table-striped text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 50%;">Options</th>
+                                                                <th>Marks</th>
+                                                                <th>Type</th>
+                                                                <th>Active</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="row">
+                                                                        <span
+                                                                            [ngClass]="(op.isCorrect)? 'label-success':'label-danger'"
+                                                                            class="ml-2 label"
+                                                                            *ngFor="let op of q.answerOptions">
+                                                                            {{op.op}}
+                                                                        </span>
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>{{q?.marks || 'none'}}</td>
+                                                                <td>{{q?.type || 'none'}}</td>
+
+                                                                <td>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <div *ngIf="q.isActive"
+                                                                            class="custom-control custom-checkbox">
+                                                                            <input
+                                                                                (click)="activationQuestion(q._id, q.isActive,i)"
+                                                                                checked onclick="return false"
+                                                                                name="block"
+                                                                                class="custom-control-input"
+                                                                                id="'b-'{{q._id}}"
+                                                                                type="checkbox" /><label
+                                                                                class="custom-control-label"
+                                                                                for="'b-'{{q._id}}"></label>
+                                                                        </div>
+                                                                        <div *ngIf="!q.isActive"
+                                                                            class="custom-control custom-checkbox">
+                                                                            <input
+                                                                                (click)="activationQuestion(q._id, q.isActive,i)"
+                                                                                onclick="return false" name="block"
+                                                                                class="custom-control-input"
+                                                                                id="'b-'{{q._id}}"
+                                                                                type="checkbox" /><label
+                                                                                class="custom-control-label"
+                                                                                for="'b-'{{q._id}}"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button (click)="deleteQuestion(q._id,i)"
+                                                                        class="btn btn-danger btn-sm btn-circle">
+                                                                        <i class="fa fa-trash pointer"></i>
+                                                                    </button>
+                                                                    <button (click)="openQuestionForm(question,q,i)"
+                                                                        class="btn btn-sm btn-info btn-circle"
+                                                                        type="button">
+                                                                        E
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </p-accordionTab>
+                                            </p-accordion>
+                                        </div>
+                                        <!-- <div class="col-12 bg-white p-4 users" style="overflow-x: scroll;">
+                
+                
+                                            <div class="card">
+                                                <div class="card-body">
+                
+                                                    <div class="mb-4">
+                                                        <div class="form-row ">
+                                                         
+                                                            <div class="col-md-10">
+                                                                <input [(ngModel)]="bSearch.name" name="name" type="text"
+                                                                    class="form-control" placeholder="Filter By Name" />
+                                                            </div>
+                
+                                                            <div class="col-md-2">
+                                                                <button (click)="loadBarbers()"
+                                                                    class="btn btn-success btn-block">Filter</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                
+                                                    <table class="table table-striped border mt-4 text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Phone</th>
+                                                                <th>Phone Verified</th>
+                                                                <th>Block</th>
+                                                                <th>Approved By Shop</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let b of barbers; let i=index">
+                                                                <td>{{ b?.name || 'None'}}</td>
+                                                                <td>{{ b?.phone || 'None'}}</td>
+                                                                <td>
+                                                                    <span *ngIf="b.isPhoneVerified"
+                                                                        class="badge badge-pill badge-success">Yes</span>
+                                                                    <span *ngIf="!b.isPhoneVerified"
+                                                                        class="badge badge-pill badge-danger">No</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <div *ngIf="b.isBlocked" class="custom-control custom-checkbox">
+                                                                            <input (click)="blockBarber(b._id, b.isBlocked,i)" checked
+                                                                                onclick="return false" name="block"
+                                                                                class="custom-control-input" id="'b-'{{b._id}}"
+                                                                                type="checkbox" /><label class="custom-control-label"
+                                                                                for="'b-'{{b._id}}"></label>
+                                                                        </div>
+                                                                        <div *ngIf="!b.isBlocked"
+                                                                            class="custom-control custom-checkbox">
+                                                                            <input (click)="blockBarber(b._id, b.isBlocked,i)"
+                                                                                onclick="return false" name="block"
+                                                                                class="custom-control-input" id="'b-'{{b._id}}"
+                                                                                type="checkbox" /><label class="custom-control-label"
+                                                                                for="'b-'{{b._id}}"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="b.approvedByShop"
+                                                                        class="badge badge-pill badge-success">Yes</span>
+                                                                    <span *ngIf="!b.approvedByShop"
+                                                                        class="badge badge-pill badge-danger">No</span>
+                                                                </td>
+                                                              
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                
+                                                    <div class="d-flex justify-content-center p-2">
+                                                        <ngb-pagination class="d-flex justify-content-end"
+                                                            (pageChange)="barberPagination($event)" [pageSize]="numOfItemsOfBarbers"
+                                                            [collectionSize]="barbersCollSize" [(page)]="barberCurrPage" [maxSize]="6"
+                                                            [boundaryLinks]="true" size="sm">
+                                                        </ngb-pagination>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                
+                                        </div> -->
+                                    </div>
+
+                                </ng-template>
+                            </li>
+                        </ul>
+
+                        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #question let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Question</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form #f="ngForm" (ngSubmit)="saveQuestion()" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Question</label>
+                        <input [(ngModel)]="questionInfo.question" name="question" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Type</label>
+                        <select [(ngModel)]="questionInfo.type" class="form-control" name="type" id="type">
+                            <option value="single-select">Single Select</option>
+                            <option value="multi-select">Multi Select</option>
+                            <option value="audio-record">Audio Recording</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Marks</label>
+                        <input [(ngModel)]="questionInfo.marks" name="marks" class="form-control" type="number">
+                    </div>
+                </div>
+                <div *ngIf="questionInfo?.type != 'audio-record'" class="col-md-10 mx-auto mb-3">
+                    <button (click)="addOptionForQuestion()" type="button" class="btn btn-block btn-success">Add
+                        Option</button>
+                </div>
+                <div *ngIf="questionInfo?.type != 'audio-record'" class="col-md-12">
+                    <div class="row">
+                        <div *ngFor="let op of questionInfo.answerOptions; let i=index" class="col-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" name="isCorrect-{{i}}" id="correct-{{i}}"
+                                            [(ngModel)]="questionInfo.answerOptions[i].isCorrect"
+                                            aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                                <input type="text" name="op-{{i}}" id="op-{{i}}"
+                                    [(ngModel)]="questionInfo.answerOptions[i].op" class="form-control"
+                                    aria-label="Text input with checkbox">
+                                <div class="input-group-append">
+                                    <button (click)="removeOption(i)" class="btn btn-outline-danger"
+                                        type="button">X</button>
+                                </div>
+                            </div>
+                            <!-- <input [(ngModel)]="questionInfo.answerOptions[i].op" class="form-control" type="text"> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">For</label>
+                        <select class="form-control" ngModel name="type" id="type">
+                            <option value="teacher_onboarding">Teacher On-Boarding</option>
+                        </select>
+                    </div>
+                </div> -->
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-inverse" (click)="modal.dismiss('Cross click')">
+            Close
+        </button>
+    </div> -->
+</ng-template>

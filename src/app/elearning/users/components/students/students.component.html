@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold">Students</h3>
+        <div class="card-plain">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input [(ngModel)]="search.name" name="name" class="form-control form-control-sm"
+                                placeholder="Name..." type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <input [(ngModel)]="search.email" name="email" class="form-control form-control-sm"
+                                placeholder="Email..." type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button (click)="loadUsers()" class="btn btn-info">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive-md table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">age</th>
+                        <th scope="col">Verified</th>
+                        <th scope="col">Blocked</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center" *ngFor="let u of users; let i=index">
+                        <td>{{ u?.name }}
+                        </td>
+
+                        <td>{{ u?.email }}</td>
+                        <td>
+                            <p>{{u?.gender}}</p>
+                        </td>
+                        <td>
+                            <span class="badge badge-primary">{{u?.age}}</span>
+                        </td>
+                        <td>
+                            <span *ngIf="u.isEmailVerified" class="badge badge-pill badge-success">Yes</span>
+                            <span *ngIf="!u.isEmailVerified" class="badge badge-pill badge-danger">No</span>
+                        </td>
+
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <div *ngIf="u.isBlocked" class="custom-control custom-checkbox">
+                                    <input (click)="blockUser(u._id, u.isBlocked,i)" checked onclick="return false"
+                                        name="block" class="custom-control-input" id="'b-'{{u._id}}"
+                                        type="checkbox" /><label class="custom-control-label"
+                                        for="'b-'{{u._id}}"></label>
+                                </div>
+                                <div *ngIf="!u.isBlocked" class="custom-control custom-checkbox">
+                                    <input (click)="blockUser(u._id, u.isBlocked,i)" onclick="return false" name="block"
+                                        class="custom-control-input" id="'b-'{{u._id}}" type="checkbox" /><label
+                                        class="custom-control-label" for="'b-'{{u._id}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button (click)="deleteUser(u._id,i)" class="btn btn-sm btn-danger btn-circle"
+                                type="button">
+                                X
+                            </button>
+                            <a routerLink="/users/student/details/{{u._id}}" class="btn btn-sm btn-info btn-circle">
+                                D
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ngb-pagination class="d-flex justify-content-end" (pageChange)="pagination($event)" [pageSize]="numOfItems"
+            [collectionSize]="collSize" [(page)]="currPage" [maxSize]="6" [boundaryLinks]="true" size="sm">
+        </ngb-pagination>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold">Trainings</h3>
+        <div class="card-plain">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <a routerLink="/training/form" class="btn btn-success">Create Training</a>
+                        <!-- <Button (click)="openQuizForm(quiz)" class="btn btn-success">Create Quiz</Button> -->
+                        <hr>
+                    </div>
+                    <!-- <div class="col-md-10">
+                        <div class="form-group">
+                            <select [(ngModel)]="search.for" class="form-control" name="for" id="for">
+                                <option value="">All</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-md-5">
+                        <div class="form-group">
+                            <select [(ngModel)]="search.type" name="type" class="form-control" id="type">
+                                <option value="teacher_onboarding">Teacher On-Boarding</option>
+                            </select>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-md-2">
+                        <button (click)="loadQuizes()" class="btn btn-block btn-info">Filter</button>
+                    </div> -->
+                </div>
+            </div>
+            <table class="table table-responsive-md table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Name</th>
+                        <th scope="col">Total Marks</th>
+                        <th scope="col">Total Questions</th>
+                        <th scope="col">Time (mins)</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center" *ngFor="let t of trainings; let i=index">
+                        <td>{{ t?.name || 'None'}}
+                        </td>
+                        <td>{{ t?.totalMarks || 'None'}}
+                        </td>
+                        <td>{{ t?.totalQuestions || 'None'}}
+                        </td>
+                        <td>{{ t?.timeInMins || 'None'}}
+                        </td>
+                        <!-- <td>{{ (t?.type =='teacher_onboarding')? 'Teacher On-Boarding':t?.type }}</td> -->
+
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <div *ngIf="t.isActive" class="custom-control custom-checkbox">
+                                    <input (click)="activationTraining(t._id, t.isActive,i)" checked
+                                        onclick="return false" name="block" class="custom-control-input"
+                                        id="'b-'{{t._id}}" type="checkbox" /><label class="custom-control-label"
+                                        for="'b-'{{t._id}}"></label>
+                                </div>
+                                <div *ngIf="!t.isActive" class="custom-control custom-checkbox">
+                                    <input (click)="activationTraining(t._id, t.isActive,i)" onclick="return false"
+                                        name="block" class="custom-control-input" id="'b-'{{t._id}}"
+                                        type="checkbox" /><label class="custom-control-label"
+                                        for="'b-'{{t._id}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button (click)="deleteTraining(t._id,i)" class="btn btn-sm btn-danger btn-circle"
+                                type="button">
+                                X
+                            </button>
+                            <a routerLink="/training/form/{{t?._id}}" class="btn btn-sm btn-info btn-circle"
+                                type="button">
+                                E
+                            </a>
+                            <!-- <a routerLink="/users/student/details/{{u._id}}" class="btn btn-sm btn-info btn-circle">
+                                D
+                            </a> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ngb-pagination class="d-flex justify-content-end" (pageChange)="pagination($event)" [pageSize]="numOfItems"
+            [collectionSize]="collSize" [(page)]="currPage" [maxSize]="6" [boundaryLinks]="true" size="sm">
+        </ngb-pagination>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="card card-plain" style="font-size: 17px; padding: 15px;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-10 text-left">
+                <div class="form-group">
+                    <label class="font-weight-bold" for="">Select Level *</label>
+                    <select (change)="setLevel($event)" [(ngModel)]="teacherProfileInfo.level" name="level"
+                        class="form-control" id="level">
+                        <option disabled value=""></option>
+                        <option *ngFor="let l of levels" [value]="l._id">{{l?.title}}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="col-5 text-left">
+                <div class="form-group">
+                    <label class="font-weight-bold" for="">Select Class Type *</label>
+                    <select (change)="setClassType($event)" [(ngModel)]="teacherProfileInfo.classType" name="classType"
+                        class="form-control" id="classType">
+                        <option disabled value=""></option>
+                        <option *ngFor="let c of classTypes" [value]="c._id">{{c?.title}}</option>
+                    </select>
+                </div>
+            </div> -->
+            <div class="col-2">
+                <label for="">&nbsp;</label><br>
+                <button (click)="saveLevelAndClassTypes()" class="btn btn-block btn-success">Save & Approve</button>
+            </div>
+        </div>
+
+        <div *ngIf="approvalInfo == 'all'" class="row">
+            <div class="col-12">
+                <div class="alert alert-success text-center">
+                    <b>Approved.</b>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 text-left">
+                <a target="_blank" class="btn btn-sucess"
+                    [href]="staticUrl + teacherContractDetails?.signedContractFile"><strong>Signed
+                        Contract By
+                        Teacher</strong></a>
+            </div>
+            <div class="col-md-6 text-right">
+                <a target="_blank" class="btn btn-danger"
+                    [href]="staticUrl + teacherContractDetails?.contract"><strong>Contract Initial
+                        Material</strong></a>
+            </div>
+
+        </div>
+        <hr>
+        <!-- <h4>{{teacherContractDetails?.contract?.name}}</h4> -->
+        <p class="mt-2">
+            {{teacherContractDetails?.guideLines}}
+        </p>
+
+    </div>
+
+
+
+
+
+</div>

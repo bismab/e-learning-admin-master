@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col">
+        <h3 class="font-weight-bold">Enrollments</h3>
+        <div class="card-plain">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <select name="status" [(ngModel)]="search.status" class="form-control" id="status">
+                                <option [value]="'waiting'">Waiting</option>
+                                <option [value]="'enrolled'">Enrolled</option>
+                                <option [value]="'completed'">Completed</option>
+                                <option [value]="'cancelled'">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-5">
+                        <div class="form-group">
+                            <select [(ngModel)]="search.type" name="type" class="form-control" id="type">
+                                <option value="teacher_onboarding">Teacher On-Boarding</option>
+                            </select>
+                        </div>
+                    </div> -->
+                    <div class="col-md-2">
+                        <button (click)="loadEnrollments()" class="btn btn-block btn-info">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive-md table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Prefered Timings</th>
+                        <th scope="col">Prefered Days</th>
+                        <th scope="col">Class Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center" *ngFor="let e of enrollments; let i=index">
+                        <td>{{ e?.student[0]?.name || 'None'}} <br>
+                        </td>
+                        <td>{{ e?.student[0]?.age || 'None'}} <br>
+                        </td>
+                        <td>{{ e?.student[0]?.gender || 'None'}} <br>
+                        </td>
+                        <td>
+                            <span class="label label-success">
+                                {{e?.startTime | date :'hh:mm a'}} to {{e?.endTime | date :'hh:mm a'}}
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="e?.days?.sun" class="badge badge-primary">
+                                Sunday
+                            </span>
+                            <span *ngIf="e?.days?.mon" class="badge badge-primary">
+                                Monday
+                            </span>
+                            <span *ngIf="e?.days?.tue" class="badge badge-primary">
+                                Tuesday
+                            </span>
+                            <span *ngIf="e?.days?.wed" class="badge badge-primary">
+                                Wednesday
+                            </span>
+                            <span *ngIf="e?.days?.thu" class="badge badge-primary">
+                                Thursday
+                            </span>
+                            <span *ngIf="e?.days?.fri" class="badge badge-primary">
+                                Friday
+                            </span>
+                            <span *ngIf="e?.days?.sat" class="badge badge-primary">
+                                Saturday
+                            </span>
+
+                        </td>
+                        <td>
+                            <span class="label label-primary">
+                                {{e?.classType[0]?.title}} (1 - {{e?.classType[0]?.maxStudents}})
+                            </span>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ngb-pagination class="d-flex justify-content-end" (pageChange)="pagination($event)" [pageSize]="numOfItems"
+            [collectionSize]="collSize" [(page)]="currPage" [maxSize]="6" [boundaryLinks]="true" size="sm">
+        </ngb-pagination>
+    </div>
+</div>

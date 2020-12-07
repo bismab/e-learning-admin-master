@@ -1,0 +1,84 @@
+<div class="card card-plain" style="font-size: 17px; padding: 15px;">
+    <div class="col col-md-12">
+        <div class="mb-3 text-left">
+            <h3><b>Personal Information</b></h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 text-left">
+                <b>Email</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.email || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 text-left">
+                <b>Age</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.age || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Gender</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.gender || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Bio</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.bio || 'NA'}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col col-md-12">
+        <div class="mb-3 text-left">
+            <h3><b>Education Information</b></h3>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Course</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.studentEduInfo?.course || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Year</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.studentEduInfo?.year || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2  text-left">
+                <b>Institute</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.studentEduInfo?.institute || 'NA'}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-2 text-left">
+                <b>Status</b>
+            </div>
+            <div class="col-6 text-left">
+                {{studentProfileDetails?.studentEduInfo?.status || 'NA'}}
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
